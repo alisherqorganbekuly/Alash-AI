@@ -1,0 +1,618 @@
+<!doctype html>
+<html lang="kk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>АЛАШ AI — Құндылықтар платформасы</title>
+<link href="https://fonts.googleapis.com/css2?family=PT+Serif:wght@400;700&family=PT+Sans:wght@400;700&family=Unbounded:wght@500;800;900&family=Manrope:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#07080c;--card:#10131b;--line:#232838;--gold:#f5c542;--cyan:#3be0ff;--red:#ff4d5e;--t:#e9ecf3;--m:#8a93a8}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--t);font-family:Manrope,sans-serif;overflow-x:hidden}
+body:before{content:"";position:fixed;inset:0;background:radial-gradient(800px 500px at 85% -10%,#f5c54222,transparent),radial-gradient(700px 500px at -10% 110%,#3be0ff1c,transparent);pointer-events:none;z-index:-1}
+h1,h2,h3,.u{font-family:Unbounded,sans-serif}
+nav{position:sticky;top:0;z-index:20;display:flex;gap:6px;padding:12px 16px;background:#07080cd9;backdrop-filter:blur(12px);border-bottom:1px solid var(--line);overflow-x:auto}
+nav .logo{font-family:Unbounded;font-weight:900;color:var(--gold);margin-right:auto;white-space:nowrap;align-self:center}
+nav button{background:none;border:1px solid var(--line);color:var(--t);padding:9px 14px;border-radius:99px;font:600 14px Manrope;cursor:pointer;white-space:nowrap;transition:.2s}
+nav button.on,nav button:hover{background:var(--gold);color:#000;border-color:var(--gold)}
+section{display:none;max-width:1150px;margin:auto;padding:40px 16px 80px;animation:in .45s ease}
+section.on{display:block}
+@keyframes in{from{opacity:0;transform:translateY(18px)}}
+.hero.on{min-height:78vh;display:flex;flex-direction:column;justify-content:center}
+.tag{display:inline-block;color:var(--cyan);border:1px solid #3be0ff55;padding:6px 12px;border-radius:99px;font-size:13px;letter-spacing:2px;width:max-content;margin-bottom:22px}
+.hero h1{font-size:clamp(44px,9vw,120px);line-height:.92;font-weight:900}
+.hero h1 b{color:var(--gold);text-shadow:0 0 40px #f5c54266}
+.hero p{max-width:620px;color:var(--m);font-size:18px;margin:26px 0 34px;line-height:1.6}
+.big{background:var(--gold);color:#000;border:0;padding:18px 30px;border-radius:14px;font:800 17px Unbounded;cursor:pointer;width:max-content;box-shadow:0 10px 40px #f5c54255;transition:.2s}
+.big:hover{transform:translateY(-3px) scale(1.03)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin-top:50px}
+.stat{border-left:3px solid var(--gold);padding:6px 16px}.stat b{font:900 38px Unbounded;display:block}.stat span{color:var(--m);font-size:14px}
+h2{font-size:clamp(28px,5vw,48px);margin-bottom:10px}h2 i{color:var(--gold);font-style:normal}
+.sub{color:var(--m);margin-bottom:30px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px;cursor:pointer;transition:.25s;position:relative;overflow:hidden}
+.card:hover{border-color:var(--gold);transform:translateY(-4px)}
+.card .n{font:900 54px Unbounded;color:#ffffff0d;position:absolute;right:14px;top:4px}
+.card h3{font-size:20px;margin:10px 0 8px}.card p{color:var(--m);line-height:1.5}
+.card .more{max-height:0;overflow:hidden;transition:.35s;color:var(--t)}.card.open .more{max-height:300px;margin-top:12px}
+.ic{font-size:30px}
+.tl{position:relative;padding-left:30px}.tl:before{content:"";position:absolute;left:8px;top:0;bottom:0;width:2px;background:linear-gradient(var(--gold),var(--cyan))}
+.ev{position:relative;margin-bottom:26px;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px 20px}
+.ev:before{content:"";position:absolute;left:-28px;top:22px;width:14px;height:14px;border-radius:50%;background:var(--gold);box-shadow:0 0 16px var(--gold)}
+.ev b{font:900 26px Unbounded;color:var(--gold)}
+.fig{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:14px}
+.person{background:linear-gradient(160deg,#171b27,#0d0f15);border:1px solid var(--line);border-radius:22px;padding:26px}
+.person .av{width:64px;height:64px;border-radius:18px;background:var(--gold);color:#000;display:grid;place-items:center;font:900 26px Unbounded;margin-bottom:14px}
+.person q{display:block;margin:14px 0;color:var(--gold);font-style:italic}
+.person button{background:none;border:1px solid var(--cyan);color:var(--cyan);padding:10px 14px;border-radius:10px;font:700 14px Manrope;cursor:pointer}
+.person button:hover{background:var(--cyan);color:#000}
+.bar{margin:18px 0}.bar .l{display:flex;justify-content:space-between;margin-bottom:8px;font-weight:600}
+.bar .tr{height:16px;background:#1a1e2a;border-radius:99px;overflow:hidden}.bar .f{height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,var(--cyan),var(--gold));transition:1.4s cubic-bezier(.2,.8,.2,1)}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:26px}
+.two{display:grid;grid-template-columns:repeat(auto-fit,minmax(320px,1fr));gap:14px}
+/* quiz */
+.qbox{max-width:720px;margin:auto}.prog{height:6px;background:#1a1e2a;border-radius:9px;margin-bottom:24px}.prog div{height:100%;background:var(--gold);border-radius:9px;transition:.4s}
+.qq{font:800 clamp(20px,3.5vw,28px) Unbounded;margin-bottom:22px;line-height:1.3}
+.opt{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);color:var(--t);padding:16px 18px;border-radius:14px;margin-bottom:10px;font:600 16px Manrope;cursor:pointer;transition:.2s}
+.opt:hover{border-color:var(--cyan)}.opt.ok{background:#0f3b26;border-color:#2ee07f}.opt.no{background:#3b0f15;border-color:var(--red)}
+.res{text-align:center}.res b{font:900 90px Unbounded;color:var(--gold);display:block}
+/* chat */
+.chat{display:flex;flex-direction:column;flex:1;min-height:0;background:#0d1017}
+.laptop{max-width:1000px;margin:10px auto 0;perspective:1600px}
+.lid{background:linear-gradient(#2a2e38,#15171d);border-radius:22px 22px 6px 6px;padding:22px 22px 26px;position:relative;box-shadow:0 0 0 2px #3a3f4b inset,0 40px 80px #000a,0 0 80px #f5c54218}
+.cam{position:absolute;top:8px;left:50%;width:7px;height:7px;margin-left:-3px;border-radius:50%;background:#0a0c10;box-shadow:0 0 0 2px #22252d,inset 0 0 2px #3be0ff}
+.screen{height:min(64vh,560px);border-radius:6px;overflow:hidden;background:#000}
+.desk{height:100%;display:flex;flex-direction:column;background:radial-gradient(circle at 25% 20%,#3b2a07,transparent 50%),radial-gradient(circle at 80% 90%,#06303b,transparent 55%),#07080c;padding:14px 14px 0}
+.win{flex:1;min-height:0;display:flex;flex-direction:column;border-radius:12px;overflow:hidden;border:1px solid #2b3040;box-shadow:0 20px 50px #000c;animation:pop .5s cubic-bezier(.2,1.4,.4,1)}
+@keyframes pop{from{transform:scale(.85);opacity:0}}
+.tbar{display:flex;align-items:center;gap:7px;padding:9px 12px;background:#171a23;border-bottom:1px solid #2b3040}
+.tbar b{font:800 13px Unbounded;margin-left:8px;color:var(--gold);letter-spacing:1px}
+.dt{width:12px;height:12px;border-radius:50%}.dt.r{background:#ff5f57}.dt.y{background:#febc2e}.dt.g{background:#28c840}
+.tbar select{margin-left:auto;background:#0b0d13;color:var(--t);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:700 12px Manrope;cursor:pointer}
+.task{display:flex;align-items:center;gap:6px;margin:10px -14px 0;padding:7px 12px;background:#0b0d13e6;border-top:1px solid #222}
+.task span{padding:5px 10px;border-radius:7px;font-size:13px}.task .act{background:#ffffff14;border-bottom:2px solid var(--gold)}
+.task .clk{margin-left:auto;color:var(--m);font-variant-numeric:tabular-nums}
+.base{height:22px;margin:0 -5%;background:linear-gradient(#c9ccd3,#7d828c);border-radius:0 0 26px 26px;position:relative;box-shadow:0 20px 40px #000c}
+.notch{position:absolute;top:0;left:50%;width:130px;margin-left:-65px;height:8px;background:#8d929b;border-radius:0 0 10px 10px}
+@media(max-width:600px){.lid{padding:10px 8px 14px;border-radius:14px 14px 4px 4px}.desk{padding:6px 6px 0}.task{margin:6px -6px 0}.screen{height:70vh}.tbar b{display:none}}
+.who{display:flex;gap:8px;padding:12px;border-bottom:1px solid var(--line);overflow-x:auto}
+.who button{background:#1a1e2a;border:1px solid transparent;color:var(--t);padding:8px 12px;border-radius:10px;font:600 13px Manrope;cursor:pointer;white-space:nowrap}
+.who button.on{border-color:var(--gold);color:var(--gold)}
+.msgs{flex:1;overflow-y:auto;padding:18px;display:flex;flex-direction:column;gap:12px}
+.m{max-width:82%;padding:12px 16px;border-radius:16px;line-height:1.55;white-space:pre-wrap}
+.m.u{align-self:flex-end;background:var(--gold);color:#000;border-bottom-right-radius:4px}
+.m.a{align-self:flex-start;background:#1a1e2a;border-bottom-left-radius:4px}
+.m.a small{display:block;color:var(--cyan);font-weight:800;margin-bottom:4px}
+.inp{display:flex;gap:8px;padding:12px;border-top:1px solid var(--line)}
+.inp input{flex:1;background:#0b0d13;border:1px solid var(--line);color:var(--t);padding:14px;border-radius:12px;font:16px Manrope;outline:none}
+.inp input:focus{border-color:var(--gold)}
+.inp button{background:var(--gold);border:0;padding:0 20px;border-radius:12px;font:900 18px Unbounded;cursor:pointer}
+.chips{display:flex;flex-wrap:wrap;gap:8px;padding:0 12px 12px}
+.chips span{border:1px dashed var(--line);padding:7px 11px;border-radius:99px;font-size:13px;color:var(--m);cursor:pointer}.chips span:hover{color:var(--gold);border-color:var(--gold)}
+.dots:after{content:"...";animation:d 1s infinite}@keyframes d{50%{opacity:.2}}
+footer{text-align:center;color:var(--m);font-size:13px;padding:30px}
+.v3{position:relative;height:78vh;min-height:480px;border-radius:24px;overflow:hidden;border:1px solid var(--line);background:radial-gradient(circle at 50% 60%,#1b2033,#05060a 75%)}
+#c3{width:100%;height:100%;display:block;cursor:grab}#c3:active{cursor:grabbing}
+.v3ui{position:absolute;top:14px;left:50%;transform:translateX(-50%);display:flex;gap:8px;flex-wrap:wrap;justify-content:center;width:calc(100% - 28px)}
+.v3ui button{background:#0b0d13cc;backdrop-filter:blur(8px);border:1px solid var(--line);color:var(--t);padding:10px 16px;border-radius:12px;font:700 14px Manrope;cursor:pointer}
+.v3ui button.on{background:var(--gold);color:#000;border-color:var(--gold)}
+.v3info{position:absolute;left:16px;bottom:16px;max-width:380px;background:#0b0d13d0;backdrop-filter:blur(10px);border:1px solid var(--line);border-left:3px solid var(--gold);border-radius:14px;padding:16px 18px}
+.v3info h3{font-size:18px;margin-bottom:6px;color:var(--gold)}.v3info p{color:var(--m);font-size:14px;line-height:1.5}
+.v3load{position:absolute;inset:0;pointer-events:none;display:grid;place-items:center;font:800 18px Unbounded;color:var(--gold)}
+
+/* ===== 90s WARM ===== */
+:root{--bg:#e9dcc2;--card:#f6ecd6;--line:#c9b48e;--ink:#3a2817;--gold:#c8912b;--cyan:#5f7a3a;--red:#a8471f;--t:#3a2817;--m:#7a6448}
+body{background:var(--bg);font-family:"PT Sans",Manrope,sans-serif;
+ background-image:radial-gradient(ellipse at center,transparent 55%,#7a4e2433),url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.8' numOctaves='3'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)' opacity='.09'/%3E%3C/svg%3E");background-attachment:fixed}
+body:before{background:radial-gradient(900px 500px at 80% -10%,#f0b45a33,transparent),radial-gradient(700px 500px at 0% 110%,#a8471f22,transparent)}
+h1,h2,h3,.stat b,.card .n,.ev b,.person .av,.qq,.res b,.tbar b,nav .logo{font-family:"PT Serif",Georgia,serif!important}
+.big,nav button,.opt,.inp input,.who button,.person button,.v3ui button,.tbar select{font-family:"PT Sans",sans-serif!important}
+nav{background:#3a2817f2;border-bottom:3px solid var(--gold)}
+nav .logo{color:#f0c27a;letter-spacing:3px}
+nav button{color:#f2e4c8;border-color:#6b5236}nav button.on,nav button:hover{background:var(--gold);color:var(--ink);border-color:var(--gold)}
+.tag{color:var(--red);border-color:#a8471f66;background:#f6ecd6}
+.hero h1 b{color:var(--red);text-shadow:3px 3px 0 #e2b871}
+.hero p{color:var(--m)}
+.big{background:var(--red);color:#fff6e6;box-shadow:0 8px 24px #a8471f55,inset 0 -3px 0 #0003;font-family:"PT Serif"!important}
+.stat{border-left-color:var(--red)}
+h2 i{color:var(--red)}
+.card,.ev,.person,.panel,.opt{background:var(--card);border:1px solid var(--line);box-shadow:0 6px 18px #7a4e2422}
+.card:hover{border-color:var(--red)}.card .n{color:#3a281712}
+.ev:before{background:var(--red);box-shadow:0 0 0 4px #e9dcc2}.tl:before{background:linear-gradient(var(--red),var(--gold))}.ev b{color:var(--red)}
+.person{background:linear-gradient(160deg,#f8efdc,#efe0c2)}.person .av{background:var(--red);color:#fff6e6}.person q{color:var(--red)}
+.person button{border-color:var(--cyan);color:var(--cyan)}.person button:hover{background:var(--cyan);color:#fff}
+.bar .tr{background:#e0cfae}.bar .f{background:linear-gradient(90deg,var(--gold),var(--red))}
+.prog{background:#e0cfae}.prog div{background:var(--red)}.res b{color:var(--red)}
+.opt:hover{border-color:var(--red)}.opt.ok{background:#dbe7c4;border-color:#5f7a3a}.opt.no{background:#f3d0c2;border-color:var(--red)}
+.v3{border:1px solid var(--line);background:linear-gradient(#e9a85c,#f3d29a 45%,#e9dcc2);box-shadow:0 14px 40px #7a4e2444}
+.v3ui button{background:#f6ecd6e0;color:var(--ink);border-color:var(--line)}.v3ui button.on{background:var(--red);color:#fff6e6;border-color:var(--red)}
+.v3info{background:#f6ecd6e8;border-color:var(--line);border-left-color:var(--red)}.v3info h3{color:var(--red)}.v3load{color:var(--red)}
+/* 90s laptop */
+.lid{background:linear-gradient(#5a4330,#2e2014);box-shadow:0 0 0 2px #7a5a3e inset,0 30px 70px #3a281788}
+.base{background:linear-gradient(#8a6a4a,#4a3422)}.notch{background:#3a2817}
+.desk{position:relative;padding:14px 14px 0 92px;overflow:hidden;
+ background:radial-gradient(circle at 22% 58%,#fff1c4 0 4%,#ffcf7a 4.5% 8%,#ffb35a33 8.5% 16%,transparent 16.5%),linear-gradient(#3b2350 0%,#a8475a 30%,#e8874a 52%,#f7c27a 64%,#d39a55 64.2%,#8a5a30 100%)}
+.desk:before{content:"";position:absolute;left:0;right:0;bottom:0;height:42%;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 300' preserveAspectRatio='none'%3E%3Cpath d='M0 120 L120 60 L220 110 L340 30 L470 105 L600 50 L720 115 L860 40 L1000 100 V300 H0Z' fill='%236b3a3a' opacity='.55'/%3E%3Cpath d='M0 170 L160 120 L300 165 L450 110 L640 170 L800 125 L1000 165 V300 H0Z' fill='%234a2a20'/%3E%3Cg fill='%232a1810'%3E%3Cpath d='M120 195 h70 v-22 q-35 -38 -70 0z'/%3E%3Crect x='148' y='180' width='14' height='15' fill='%23e8874a'/%3E%3C/g%3E%3Cpath d='M0 200 Q500 170 1000 205 V300 H0Z' fill='%23301c12'/%3E%3C/svg%3E") bottom/100% 100% no-repeat}
+.desk:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(#0000 0 2px,#00000010 2px 3px)}
+.icons{position:absolute;left:10px;top:14px;display:flex;flex-direction:column;gap:12px;z-index:2}
+.icons div{width:70px;text-align:center;color:#fff6e6;font-size:11px;cursor:pointer;text-shadow:1px 1px 2px #000;padding:4px;border:1px dashed transparent}
+.icons div:hover{border-color:#fff6e6aa;background:#ffffff1a}
+.icons i{display:block;font-style:normal;font-size:28px;filter:drop-shadow(1px 2px 1px #0006)}
+.win{position:relative;z-index:1;width:68%;margin:0 0 0 auto;border:2px solid #2e2014;border-radius:4px;box-shadow:4px 4px 0 #2e201488,0 20px 40px #0007}
+.tbar{background:linear-gradient(90deg,#6b2e14,#a8471f 60%,#c8912b)}.tbar b{color:#fff6e6;font-size:12px}
+.dt{border-radius:2px;width:14px;height:14px;background:#e9dcc2!important;box-shadow:inset -1px -1px 0 #7a6448,inset 1px 1px 0 #fff}
+.tbar select{background:#f6ecd6;color:var(--ink);border:1px solid #2e2014}
+.chat{background:#f6ecd6}.who{border-bottom:1px solid var(--line)}.who button{background:#e9dcc2;color:var(--ink)}.who button.on{border-color:var(--red);color:var(--red);background:#fff6e6}
+.msgs{background:linear-gradient(#f6ecd6,#efe2c6)}
+.m.u{background:var(--red);color:#fff6e6}.m.a{background:#fff6e6;color:var(--ink);border:1px solid var(--line)}.m.a small{color:var(--cyan)}
+.chips span{color:var(--m);border-color:var(--line)}.chips span:hover{color:var(--red);border-color:var(--red)}
+.inp{border-top:1px solid var(--line)}.inp input{background:#fffaf0;color:var(--ink);border-color:var(--line)}.inp input:focus{border-color:var(--red)}
+.inp button{background:var(--red);color:#fff6e6}
+.task{position:relative;z-index:2;margin:10px -14px 0 -92px;background:linear-gradient(#e9dcc2,#cdb991);border-top:2px solid #fff6e6}
+.task span{color:var(--ink)}.task .start{font-weight:800;background:#f6ecd6;box-shadow:inset -1px -1px 0 #7a6448,inset 1px 1px 0 #fff;border-radius:2px}
+.task .act{background:#f6ecd6;box-shadow:inset 1px 1px 0 #7a6448,inset -1px -1px 0 #fff;border-bottom:0}
+.task .clk{color:var(--ink);box-shadow:inset 1px 1px 0 #7a6448,inset -1px -1px 0 #fff;padding:5px 10px}
+@media(max-width:600px){.win{width:100%}.desk{padding-left:6px}.icons{display:none}.task{margin-left:-6px}}
+
+/* ===== ALASH OS LAPTOP SIMULATOR ===== */
+body.os{overflow:hidden;height:100vh;background:radial-gradient(ellipse at 50% 0%,#6b4a2c,#2a1a0e 70%);background-image:radial-gradient(ellipse 60% 40% at 50% 10%,#ffcf8a40,transparent),repeating-linear-gradient(90deg,#3a2614 0 3px,#43301b 3px 9px,#36230f 9px 14px),linear-gradient(#4a311a,#2a1a0e)}
+body.os>nav,body.os>footer{display:none}
+#os{position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:10px}
+.lt-lid{width:min(97vw,1500px);height:calc(100vh - 70px);background:linear-gradient(#4a3524,#24180e);border-radius:18px 18px 4px 4px;padding:18px 18px 22px;position:relative;box-shadow:0 0 0 2px #6b4e36 inset,0 30px 80px #000a}
+.lt-lid:before{content:"ALASH";position:absolute;bottom:4px;left:50%;transform:translateX(-50%);font:700 10px "PT Serif";letter-spacing:4px;color:#c8912b88}
+.lt-cam{position:absolute;top:6px;left:50%;width:7px;height:7px;margin-left:-3px;border-radius:50%;background:#0a0704;box-shadow:0 0 0 2px #3a2a1a}
+.lt-cam:after{content:"";position:absolute;left:14px;top:2px;width:3px;height:3px;border-radius:50%;background:#5f7a3a;box-shadow:0 0 6px #9fd36a}
+.lt-scr{position:relative;width:100%;height:100%;border-radius:4px;overflow:hidden;background:#000;box-shadow:inset 0 0 0 2px #000}
+.lt-base{width:min(104vw,1620px);height:26px;background:linear-gradient(#a07a52,#5a3e26);border-radius:0 0 30px 30px;position:relative;box-shadow:0 18px 30px #000c}
+.lt-base:before{content:"";position:absolute;top:0;left:50%;width:150px;margin-left:-75px;height:9px;background:#3a2817;border-radius:0 0 12px 12px}
+/* desktop */
+.os-desk{position:absolute;inset:0;bottom:40px;overflow:hidden;
+ background:radial-gradient(circle at 78% 52%,#fff1c4 0 3%,#ffcf7a 3.4% 6%,#ffb35a2a 6.4% 14%,transparent 14.4%),linear-gradient(#2a1b45 0%,#7a3a5a 28%,#d9714a 50%,#f7c27a 62%,#8a5a30 62.3%,#3a2214 100%)}
+.os-desk:before{content:"";position:absolute;left:0;right:0;bottom:0;height:45%;pointer-events:none;
+ background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 300' preserveAspectRatio='none'%3E%3Cpath d='M0 110 L120 50 L220 100 L340 25 L470 95 L600 40 L720 105 L860 30 L1000 90 V300 H0Z' fill='%236b3a3a' opacity='.5'/%3E%3Cpath d='M0 165 L160 115 L300 160 L450 105 L640 165 L800 120 L1000 160 V300 H0Z' fill='%234a2a20'/%3E%3Cg fill='%232a1810'%3E%3Cpath d='M600 192 h60 v-18 q-30 -34 -60 0z'/%3E%3Cpath d='M680 196 h44 v-13 q-22 -26 -44 0z'/%3E%3Crect x='624' y='180' width='12' height='12' fill='%23ffb35a'/%3E%3C/g%3E%3Cpath d='M0 205 Q500 175 1000 210 V300 H0Z' fill='%232a180e'/%3E%3C/svg%3E") bottom/100% 100% no-repeat}
+.os-desk:after{content:"";position:absolute;inset:0;pointer-events:none;background:repeating-linear-gradient(#0000 0 2px,#00000012 2px 3px),radial-gradient(ellipse at center,transparent 60%,#0006)}
+.os-wm{position:absolute;right:28px;bottom:22px;text-align:right;color:#fff6e6cc;font:700 32px "PT Serif";text-shadow:2px 2px 8px #0008;pointer-events:none;z-index:1}.os-wm small{display:block;font:400 13px "PT Sans";letter-spacing:3px;opacity:.8}
+.os-icons{position:absolute;left:14px;top:14px;display:grid;grid-auto-flow:column;grid-template-rows:repeat(auto-fill,92px);gap:6px;height:calc(100% - 20px);z-index:2}
+.os-icon{width:84px;text-align:center;color:#fff6e6;font:600 12px "PT Sans";cursor:pointer;padding:6px 2px;border:1px dashed transparent;text-shadow:1px 1px 3px #000;user-select:none}
+.os-icon i{display:block;font-style:normal;font-size:34px;filter:drop-shadow(2px 3px 2px #0007);margin-bottom:4px;transition:.15s}
+.os-icon:hover{background:#ffffff1f;border-color:#fff6e699}.os-icon:hover i{transform:scale(1.12)}
+/* windows */
+.w95{position:absolute;display:flex;flex-direction:column;background:#efe2c6;border:2px solid #2e2014;border-radius:6px;box-shadow:inset 1px 1px 0 #fff6e6,6px 8px 0 #0004,0 24px 60px #0008;min-width:300px;min-height:200px;overflow:hidden;animation:wopen .22s cubic-bezier(.2,1.3,.4,1)}
+@keyframes wopen{from{transform:scale(.85);opacity:0}}
+.w95.max{left:0!important;top:0!important;width:100%!important;height:100%!important;border-radius:0}
+.w95 .wt{display:flex;align-items:center;gap:8px;padding:7px 8px 7px 12px;background:linear-gradient(90deg,#5a2410,#a8471f 60%,#c8912b);color:#fff6e6;font:700 14px "PT Serif";cursor:move;user-select:none;flex:none}
+.w95:not(.focus) .wt{background:linear-gradient(90deg,#7a6a58,#a89a84);color:#efe2c6}
+.w95 .wt span{flex:1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.w95 .wt button{width:24px;height:22px;border:0;background:#efe2c6;color:#3a2817;font:700 13px monospace;cursor:pointer;border-radius:3px;box-shadow:inset -1px -1px 0 #7a6448,inset 1px 1px 0 #fff}
+.w95 .wt button:active{box-shadow:inset 1px 1px 0 #7a6448}.w95 .wt button.x:hover{background:#c0392b;color:#fff}
+.w95 .wb{flex:1;overflow:auto;background:var(--bg)}
+.w95 .wb section{display:block!important;padding:24px 22px 40px;max-width:none;animation:none}
+.w95 .wb .hero{min-height:0}.w95 .wb .hero h1{font-size:clamp(40px,6vw,86px)}
+.w95 .wb .v3{height:calc(100% - 90px);min-height:380px}
+.w95 #m3d{height:100%;padding-bottom:16px}
+.w95 #ai{height:100%;display:flex!important;flex-direction:column;padding:0}
+.w95 #ai>h2,.w95 #ai>.sub{display:none}
+.w95 #ai .chat{flex:1;height:auto;border-radius:0}
+.w95 .wr{position:absolute;right:0;bottom:0;width:16px;height:16px;cursor:nwse-resize;background:linear-gradient(135deg,transparent 50%,#7a6448 50% 60%,transparent 60% 70%,#7a6448 70% 80%,transparent 80%)}
+.who select{margin-left:auto;background:#fffaf0;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 8px;font:700 13px "PT Sans";cursor:pointer}
+/* taskbar */
+.os-bar{position:absolute;left:0;right:0;bottom:0;height:40px;display:flex;align-items:center;gap:5px;padding:4px 6px;background:linear-gradient(#efe2c6,#cdb991);border-top:2px solid #fff6e6;z-index:9000}
+.os-bar .b{height:30px;display:flex;align-items:center;gap:6px;padding:0 12px;background:#efe2c6;border:0;border-radius:3px;font:600 13px "PT Sans";color:#3a2817;cursor:pointer;box-shadow:inset -1px -1px 0 #7a6448,inset 1px 1px 0 #fff;max-width:170px;white-space:nowrap;overflow:hidden}
+.os-bar .b.on{box-shadow:inset 1px 1px 0 #7a6448,inset -1px -1px 0 #fff;background:#f6ecd6}
+.os-bar .start{font:700 14px "PT Serif";padding:0 14px}
+.os-tasks{display:flex;gap:5px;flex:1;overflow:hidden}
+.os-tray{display:flex;align-items:center;gap:10px;height:30px;padding:0 12px;font:600 13px "PT Sans";color:#3a2817;box-shadow:inset 1px 1px 0 #7a6448,inset -1px -1px 0 #fff;border-radius:3px}
+/* start menu */
+.os-menu{position:absolute;left:4px;bottom:44px;width:270px;display:none;background:#efe2c6;border:2px solid #2e2014;border-radius:6px;box-shadow:6px 6px 0 #0004;z-index:9001;overflow:hidden}
+.os-menu.on{display:flex;animation:wopen .18s}
+.os-menu .side{width:34px;background:linear-gradient(#a8471f,#5a2410);color:#fff6e6;writing-mode:vertical-rl;transform:rotate(180deg);font:700 16px "PT Serif";padding:12px 6px;letter-spacing:3px}
+.os-menu ul{list-style:none;flex:1;padding:4px}
+.os-menu li{display:flex;gap:10px;align-items:center;padding:9px 10px;font:600 14px "PT Sans";color:#3a2817;cursor:pointer;border-radius:3px}
+.os-menu li:hover{background:#a8471f;color:#fff6e6}.os-menu li i{font-style:normal;font-size:20px}
+.os-menu hr{border:0;border-top:1px solid #c9b48e;margin:4px}
+/* boot */
+.os-boot{position:absolute;inset:0;z-index:9999;background:#120b06;display:flex;flex-direction:column;align-items:center;justify-content:center;color:#f0c27a;transition:opacity .6s}
+.os-boot h1{font:700 clamp(36px,6vw,72px) "PT Serif";letter-spacing:6px;text-shadow:0 0 30px #c8912b66}
+.os-boot h1 b{color:#a8471f}.os-boot p{font:14px "PT Sans";letter-spacing:4px;color:#c9b48e;margin:10px 0 30px}
+.os-load{width:260px;height:18px;border:2px solid #c9b48e;padding:2px;border-radius:3px}.os-load div{height:100%;width:0;background:repeating-linear-gradient(90deg,#c8912b 0 14px,transparent 14px 18px);transition:width .2s}
+.os-boot .log{margin-top:20px;font:12px monospace;color:#7a6448;height:18px}
+@media(max-width:700px){.lt-lid{padding:8px;border-radius:10px 10px 3px 3px;height:calc(100vh - 44px)}.lt-base{height:14px}.os-icons{grid-template-rows:repeat(auto-fill,84px)}.os-icon{width:70px}.os-wm{display:none}.os-bar .b:not(.start){max-width:90px}}
+</style>
+</head>
+<body>
+<nav>
+ <span class="logo">АЛАШ·AI</span>
+ <button class="on" data-s="home">Басты</button>
+ <button data-s="values">6 тірек</button>
+ <button data-s="history">Тарих</button>
+ <button data-s="figures">Тұлғалар</button>
+ <button data-s="data">Зерттеу</button>
+ <button data-s="m3d">🧊 3D</button>
+ <button data-s="quiz">Квиз</button>
+ <button data-s="ai">🤖 AI-сұхбат</button>
+</nav>
+
+<section id="home" class="on hero">
+ <span class="tag">ҒЫЛЫМИ ЖОБА · 2026</span>
+ <h1>АЛАШ<br><b>КОДЫ</b><br>СЕНДЕ.</h1>
+ <p>Алаш құндылықтары қазіргі жасөспірімдер санасында өмір сүре ме? Біз тексердік. Енді кезек — сенде: оқы, тексер, тарихи тұлғалармен AI арқылы сөйлес.</p>
+ <button class="big" onclick="go('ai')">Бөкейханмен сөйлесу →</button>
+ <div class="stats">
+  <div class="stat"><b data-c="40">0</b><span>қатысушы</span></div>
+  <div class="stat"><b data-c="97.5" data-p>0</b><span>қазақ тілін қолдайды</span></div>
+  <div class="stat"><b data-c="90" data-p>0</b><span>Алашты біледі</span></div>
+  <div class="stat"><b data-c="1917">0</b><span>Алашорда құрылды</span></div>
+ </div>
+</section>
+
+<section id="values">
+ <h2>Алаш мұрасының <i>6 тірегі</i></h2><p class="sub">Картаны бас — бүгінгі мағынасын аш.</p>
+ <div class="grid" id="vg"></div>
+</section>
+
+<section id="history">
+ <h2>Тарих <i>таймлайны</i></h2><p class="sub">Идеядан — мемлекетке дейін.</p>
+ <div class="tl">
+  <div class="ev"><b>1905</b><h3>Қарқаралы петициясы</h3><p class="sub" style="margin:6px 0 0">Жер, білім және азаматтық құқық мәселелері ашық көтерілді.</p></div>
+  <div class="ev"><b>1909</b><h3>«Оян, қазақ!»</h3><p class="sub" style="margin:6px 0 0">Міржақып Дулатұлы халықты ояну мен білімге шақырды.</p></div>
+  <div class="ev"><b>1913</b><h3>«Қазақ» газеті</h3><p class="sub" style="margin:6px 0 0">Ұлттық баспасөз — тіл, білім, қоғам мәселелерінің алаңы.</p></div>
+  <div class="ev"><b>1917</b><h3>Алашорда</h3><p class="sub" style="margin:6px 0 0">II жалпықазақ съезінде автономия жарияланып, Алашорда үкіметі сайланды. Төрағасы — Әлихан Бөкейхан.</p></div>
+  <div class="ev"><b>1991</b><h3>Тәуелсіздік</h3><p class="sub" style="margin:6px 0 0">Алаш армандаған дербестік — шындыққа айналды.</p></div>
+  <div class="ev"><b>2026</b><h3>Сен</h3><p class="sub" style="margin:6px 0 0">Енді бұл мұраны жалғастыратын — біздің буын.</p></div>
+ </div>
+</section>
+
+<section id="figures">
+ <h2>Алаш <i>тұлғалары</i></h2><p class="sub">Әрқайсысымен AI-сұхбатта тікелей сөйлесе аласың.</p>
+ <div class="fig" id="fg"></div>
+</section>
+
+<section id="data">
+ <h2>Зерттеу <i>нәтижесі</i></h2><p class="sub">№83 мектеп, 10–11 сынып, n = 40, 15 сұрақ.</p>
+ <div class="two">
+  <div class="panel" id="bars"></div>
+  <div class="panel">
+   <h3 style="margin-bottom:12px">Қорытынды</h3>
+   <p style="line-height:1.7;color:var(--m)"><b style="color:var(--t)">✔ Қолдау бар.</b> Жастар тіл мен ұлттық құндылықтарды жоғары бағалайды.<br><br><b style="color:var(--t)">⚠ Тереңдету керек.</b> Қозғалысты білу (90%) тұлғаларды тану (77,5%) деңгейінен жоғары — есімнен идеяға өту маңызды.<br><br><b style="color:var(--t)">→ Шешім.</b> Осы платформа: интерактив + AI арқылы мұраны тірі тілде түсіндіру.</p>
+  </div>
+ </div>
+</section>
+
+<section id="m3d">
+ <h2>3D <i>мұражай</i></h2><p class="sub">Тышқанмен айналдыр, дөңгелекпен жақында. Үш символ — үш тарих.</p>
+ <div class="v3">
+  <canvas id="c3"></canvas>
+  <div class="v3ui">
+   <button class="on" data-m="0">🏕️ Киіз үй</button><button data-m="1">☀️ Шаңырақ</button><button data-m="2">📖 «Тіл-құрал»</button>
+  </div>
+  <div class="v3info" id="v3info"></div>
+  <div class="v3load" id="v3load">3D жүктелуде<span class="dots"></span></div>
+ </div>
+</section>
+<section id="quiz"><div class="qbox" id="qz"></div></section>
+
+<section id="ai">
+ <h2>AI-<i>сұхбат</i></h2><p class="sub">Тұлғаны таңда — сұрағыңды қой. Жауап береді тарихи тұлғаның атынан.</p>
+ <div class="laptop">
+  <div class="lid"><div class="cam"></div>
+   <div class="screen">
+    <div class="desk">
+     <div class="icons"><div onclick="go('m3d')"><i>🏕️</i>3D Мұражай</div><div onclick="go('quiz')"><i>🎯</i>Квиз.exe</div><div onclick="go('data')"><i>📊</i>Зерттеу</div><div onclick="go('figures')"><i>📜</i>Тұлғалар</div><div onclick="go('history')"><i>⏳</i>Тарих 1917</div></div>
+     <div class="win">
+      <div class="tbar"><span class="dt r"></span><span class="dt y"></span><span class="dt g"></span><b>ALASH GPT</b>
+       <select id="mdl" title="Модель"><option value="openai/gpt-oss-120b">GPT-OSS 120B ⚡</option><option value="openai/gpt-oss-20b">GPT-OSS 20B 🚀</option></select></div>
+      <div class="chat">
+       <div class="who" id="who"></div>
+       <div class="msgs" id="msgs"></div>
+       <div class="chips" id="chips"></div>
+       <div class="inp"><input id="q" placeholder="Сұрағыңды жаз..." autocomplete="off"><button id="send">➤</button></div>
+      </div>
+     </div>
+     <div class="task"><span class="start">🪟 Пуск</span><span class="act">🤖 Alash GPT</span><span>🏕️ 3D</span><span>📚</span><span class="clk" id="clk"></span></div>
+    </div>
+   </div>
+  </div>
+  <div class="base"><div class="notch"></div></div>
+ </div>
+</section>
+
+<footer>АЛАШ·AI — «Алаш құндылықтарының қазіргі жасөспірімдер санасындағы көрінісі» ғылыми жобасы · 2026</footer>
+
+<script>
+// Вставьте сюда адрес вашего Cloudflare Worker (ключ Groq хранится в нём, а не в этом файле)
+const API_URL="https://ВАШ-WORKER.workers.dev";
+let MODEL="openai/gpt-oss-120b";
+
+const $=s=>document.querySelector(s);
+function go(id){document.querySelectorAll("section").forEach(s=>s.classList.toggle("on",s.id===id));document.querySelectorAll("nav button").forEach(b=>b.classList.toggle("on",b.dataset.s===id));scrollTo(0,0);if(id==="m3d")window.dispatchEvent(new Event("resize"));if(id==="data")setTimeout(()=>document.querySelectorAll(".f").forEach(f=>f.style.width=f.dataset.w+"%"),100)}
+document.querySelectorAll("nav button").forEach(b=>b.onclick=()=>go(b.dataset.s));
+
+// counters
+document.querySelectorAll("[data-c]").forEach(el=>{const t=+el.dataset.c,p=el.hasAttribute("data-p");let s=null;const st=ts=>{s=s||ts;const k=Math.min((ts-s)/1500,1),v=t*(1-Math.pow(1-k,3));el.textContent=(p?v.toFixed(t%1?1:0):Math.round(v))+(p?"%":"");if(k<1)requestAnimationFrame(st)};requestAnimationFrame(st)});
+
+// values
+const V=[["📚","Білім","Оқу мен ғылым арқылы қоғамды дамыту.","Бүгін: ғылыми жоба, олимпиада, үздіксіз оқу. «Оқу — ұлтты құтқарудың жолы»."],
+["🗣️","Тіл","Ана тілін білім мен мәдениеттің тірегі ету.","Бүгін: қазақша кітап, подкаст, цифрлық контент. Сауалнамада 97,5% қолдады."],
+["🦅","Дербестік","Ұлттық мүдде мен жер тұтастығын қорғау.","Бүгін: тәуелсіз Қазақстан — Алаш арманының жалғасы."],
+["🤝","Бірлік","Ортақ мақсатқа жұмылу, бөлінуден арылу.","Бүгін: командалық жұмыс, ортақ жобалар, қоғамдық бастамалар."],
+["🏛️","Мәдениет","Әдеби мұра мен тарихи жадты сақтау.","Бүгін: мұражай, архив, жергілікті тарихты зерттеу."],
+["🔥","Жауапкершілік","Елге адал еңбекпен қызмет ету.","Бүгін: еріктілік, қайырымдылық, цифрлық сауаттылық."]];
+$("#vg").innerHTML=V.map((v,i)=>`<div class="card" onclick="this.classList.toggle('open')"><span class="n">0${i+1}</span><span class="ic">${v[0]}</span><h3>${v[1]}</h3><p>${v[2]}</p><div class="more">→ ${v[3]}</div></div>`).join("");
+
+// figures
+const F={bokeikhan:{n:"Әлихан Бөкейхан",i:"ӘБ",r:"Алашорда төрағасы, қозғалыс көшбасшысы",q:"Ұлттық мүддені саяси бағдарға айналдыру.",sys:"Сен — Әлихан Бөкейхан (1866–1937), Алаш партиясының жетекшісі, Алашорда үкіметінің төрағасы, ғалым, публицист."},
+baitursynuly:{n:"Ахмет Байтұрсынұлы",i:"АБ",r:"Тіл білімінің атасы, ағартушы",q:"Ұлтты ағарту ана тілінен басталады.",sys:"Сен — Ахмет Байтұрсынұлы (1872–1937), ағартушы, ақын, қазақ тіл білімінің негізін салушы, «Тіл-құрал», «Қырық мысал», «Маса» авторы, төте жазуды жетілдірген, «Қазақ» газетінің редакторы."},
+dulatuly:{n:"Міржақып Дулатұлы",i:"МД",r:"Ақын, «Оян, қазақ!» авторы",q:"Оян, қазақ! Көзіңді аш!",sys:"Сен — Міржақып Дулатұлы (1885–1935), ақын, жазушы, «Оян, қазақ!» (1909) авторы, алғашқы қазақ романы «Бақытсыз Жамалдың» авторы, Алаш қайраткері."},
+guide:{n:"Алаш AI-гид",i:"AI",r:"Жоба көмекшісі",q:"Кез келген сұраққа — нақты жауап.",sys:"Сен — «Алаш AI» гид, Алаш қозғалысы тарихы мен құндылықтары бойынша сарапшысың. Жоба деректері: №83 мектептің 10–11 сынып 40 оқушысы сауалнамаға қатысты; 90% Алашты біледі, 77,5% тұлғаларды атай алады, 97,5% қазақ тілін дамыту қажет дейді, 95% ұлттық құндылықтарды маңызды санайды, 87,5% Алаш идеялары жастарға қажет дейді."}};
+$("#fg").innerHTML=Object.entries(F).filter(([k])=>k!=="guide").map(([k,f])=>`<div class="person"><div class="av">${f.i}</div><h3>${f.n}</h3><p class="sub" style="margin:4px 0 0">${f.r}</p><q>${f.q}</q><button onclick="pick('${k}');go('ai')">💬 Сөйлесу</button></div>`).join("");
+
+// data
+const D=[["Алаш қозғалысы туралы біледі",36],["Қайраткерлерді атай алады",31],["Қазақ тілін дамыту қажет",39],["Ұлттық құндылықтар маңызды",38],["Алаш идеялары жастарға қажет",35]];
+$("#bars").innerHTML="<h3>Сауалнама (n=40)</h3>"+D.map(d=>`<div class="bar"><div class="l"><span>${d[0]}</span><span>${(d[1]/40*100).toString().replace(".",",")}%</span></div><div class="tr"><div class="f" data-w="${d[1]/40*100}"></div></div></div>`).join("");
+
+// quiz
+const Q=[["Алашорда үкіметі қай жылы құрылды?",["1905","1913","1917","1991"],2],
+["Алашорда төрағасы кім болды?",["Ахмет Байтұрсынұлы","Әлихан Бөкейхан","Міржақып Дулатұлы","Мағжан Жұмабаев"],1],
+["«Оян, қазақ!» кітабының авторы?",["Міржақып Дулатұлы","Абай","Ахмет Байтұрсынұлы","Шәкәрім"],0],
+["«Тіл-құрал» оқулығын кім жазды?",["Әлихан Бөкейхан","Жүсіпбек Аймауытов","Ахмет Байтұрсынұлы","Мұхтар Әуезов"],2],
+["«Қазақ» газеті қай жылы шыға бастады?",["1909","1913","1917","1905"],1],
+["Қарқаралы петициясы қай жылы жазылды?",["1905","1916","1920","1898"],0],
+["Сауалнамада қанша % оқушы қазақ тілін дамытуды қолдады?",["77,5%","87,5%","90%","97,5%"],3]];
+let qi=0,sc=0;
+function quiz(){const z=$("#qz");if(qi>=Q.length){const p=Math.round(sc/Q.length*100);z.innerHTML=`<div class="res"><h2>Нәтиже</h2><b>${sc}/${Q.length}</b><p class="sub">${p>=85?"🔥 Алаш рухы сенде! ИМБА.":p>=55?"💪 Жақсы! Тағы бір қадам.":"📚 Тұлғалар бөлімін оқып, қайта көр."}</p><button class="big" style="margin:auto" onclick="qi=0;sc=0;quiz()">Қайта</button></div>`;return}
+const q=Q[qi];z.innerHTML=`<div class="prog"><div style="width:${qi/Q.length*100}%"></div></div><p class="sub">Сұрақ ${qi+1} / ${Q.length}</p><div class="qq">${q[0]}</div>`+q[1].map((o,i)=>`<button class="opt" data-i="${i}">${o}</button>`).join("");
+z.querySelectorAll(".opt").forEach(b=>b.onclick=()=>{const i=+b.dataset.i;z.querySelectorAll(".opt").forEach(x=>x.disabled=true);z.querySelectorAll(".opt")[q[2]].classList.add("ok");if(i===q[2])sc++;else b.classList.add("no");setTimeout(()=>{qi++;quiz()},900)})}
+quiz();
+
+// AI chat
+let cur="bokeikhan",hist=[];
+const CH=["Сіз жастарға не айтар едіңіз?","Алаштың басты мақсаты не болды?","Бүгінгі Қазақстанды көрсеңіз?","Неге білім маңызды?"];
+$("#who").innerHTML=Object.entries(F).map(([k,f])=>`<button data-k="${k}">${f.n}</button>`).join("");
+$("#who").querySelectorAll("button").forEach(b=>b.onclick=()=>pick(b.dataset.k));
+$("#chips").innerHTML=CH.map(c=>`<span>${c}</span>`).join("");
+$("#chips").querySelectorAll("span").forEach(s=>s.onclick=()=>{$("#q").value=s.textContent;send()});
+function pick(k){cur=k;hist=[];$("#who").querySelectorAll("button").forEach(b=>b.classList.toggle("on",b.dataset.k===k));$("#msgs").innerHTML="";add("a",k==="guide"?"Сәлем! Мен — Алаш AI-гид. Алаш тарихы, тұлғалары не жоба нәтижелері туралы сұра.":`Сәлем, жас ұрпақ! Мен — ${F[k].n}. ${F[k].q} Сұрағыңды қой.`)}
+function add(r,t){const d=document.createElement("div");d.className="m "+r;d.innerHTML=(r==="a"?`<small>${F[cur].n}</small>`:"")+"";d.appendChild(document.createTextNode(t));$("#msgs").appendChild(d);$("#msgs").scrollTop=1e9;return d}
+async function send(){const t=$("#q").value.trim();if(!t)return;$("#q").value="";add("u",t);hist.push({role:"user",content:t});
+const w=add("a","");w.lastChild.remove();const sp=document.createElement("span");sp.className="dots";sp.textContent="Ойланып жатыр";w.appendChild(sp);
+const sys=F[cur].sys+" Қазақ тілінде жауап бер (сұрақ орысша болса — орысша). Мектеп оқушысына түсінікті, қысқа (3–6 сөйлем), шабытты, тарихи дәл жауап бер. Бірінші жақпен сөйле. Білмейтін фактіні ойдан шығарма. Markdown белгілерін қолданба.";
+try{const r=await fetch(API_URL,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({model:$("#mdl").value,messages:[{role:"system",content:sys},...hist.slice(-10)],temperature:.7,max_tokens:700})});
+const j=await r.json();if(!r.ok)throw new Error(j.error?.message||r.status);let a=(j.choices[0].message.content||"").replace(/[*#]/g,"").trim();hist.push({role:"assistant",content:a});sp.remove();w.appendChild(document.createTextNode(a))}
+catch(e){sp.remove();w.appendChild(document.createTextNode("⚠ Байланыс қатесі: "+e.message+"\nИнтернетті тексеріп, қайта көріңіз."))}
+$("#msgs").scrollTop=1e9}
+$("#send").onclick=send;$("#q").onkeydown=e=>{if(e.key==="Enter")send()};
+pick("bokeikhan");
+</script>
+<script>
+(()=>{
+document.body.classList.add("os");
+const APPS=[["home","Алаш.exe","🏛️"],["ai","Alash GPT","🤖"],["m3d","3D Мұражай","🏕️"],["values","6 тірек","🧱"],["history","Тарих 1917","⏳"],["figures","Тұлғалар","📜"],["data","Зерттеу.xls","📊"],["quiz","Квиз.exe","🎯"]];
+// unwrap old inner laptop in AI section
+const ai=document.getElementById("ai"),chat=ai.querySelector(".chat"),sel=document.getElementById("mdl");
+ai.querySelector(".laptop").replaceWith(chat);chat.querySelector(".who").appendChild(sel);
+const os=document.createElement("div");os.id="os";os.innerHTML=`<div class="lt-lid"><div class="lt-cam"></div><div class="lt-scr">
+ <div class="os-desk"><div class="os-icons"></div><div class="os-wm">ALASH OS<small>ҒЫЛЫМИ ЖОБА · 2026</small></div></div>
+ <div class="os-menu"><div class="side">ALASH OS 95</div><ul></ul></div>
+ <div class="os-bar"><button class="b start">🪟 Пуск</button><div class="os-tasks"></div><div class="os-tray">🔊 🌐 <span id="osclk"></span></div></div>
+ <div class="os-boot"><h1>АЛАШ <b>OS</b></h1><p>ҰЛТТЫҚ ҚҰНДЫЛЫҚТАР ЖҮЙЕСІ</p><div class="os-load"><div></div></div><div class="log"></div></div>
+</div></div><div class="lt-base"></div>`;
+document.body.appendChild(os);
+const desk=os.querySelector(".os-desk"),tasks=os.querySelector(".os-tasks"),menu=os.querySelector(".os-menu");
+const W={};let z=10,n=0;
+os.querySelector(".os-icons").innerHTML=APPS.map(a=>`<div class="os-icon" data-id="${a[0]}"><i>${a[2]}</i>${a[1]}</div>`).join("");
+os.querySelectorAll(".os-icon").forEach(e=>{e.onclick=()=>open(e.dataset.id)});
+menu.querySelector("ul").innerHTML=APPS.map(a=>`<li data-id="${a[0]}"><i>${a[2]}</i>${a[1]}</li>`).join("")+`<hr><li data-id="off"><i>⏻</i>Жүйені өшіру</li>`;
+menu.querySelectorAll("li").forEach(l=>l.onclick=()=>{menu.classList.remove("on");l.dataset.id==="off"?shutdown():open(l.dataset.id)});
+os.querySelector(".start").onclick=e=>{e.stopPropagation();menu.classList.toggle("on")};desk.onclick=()=>menu.classList.remove("on");
+function focus(id){Object.values(W).forEach(w=>w.el.classList.remove("focus"));const w=W[id];if(!w)return;w.el.style.zIndex=++z;w.el.classList.add("focus");w.el.style.display="flex";w.min=false;
+ tasks.querySelectorAll(".b").forEach(b=>b.classList.toggle("on",b.dataset.id===id));if(id==="m3d")setTimeout(()=>dispatchEvent(new Event("resize")),30)}
+function open(id){menu.classList.remove("on");if(W[id]){focus(id);return}
+ const a=APPS.find(x=>x[0]===id),sec=document.getElementById(id),dr=desk.getBoundingClientRect();
+ const el=document.createElement("div");el.className="w95";
+ const big=id==="m3d"||id==="ai"||id==="home",ww=Math.min(dr.width-120,big?980:820),hh=Math.min(dr.height-30,big?620:540);
+ Object.assign(el.style,{width:ww+"px",height:hh+"px",left:Math.max(100,Math.min(110+n*60,dr.width-ww-10))+"px",top:Math.min(12+n*40,dr.height-hh-6)+"px"});n=(n+1)%6;
+ el.innerHTML=`<div class="wt"><i style="font-style:normal">${a[2]}</i><span>${a[1]}</span><button class="mn">_</button><button class="mx">□</button><button class="x">✕</button></div><div class="wb"></div><div class="wr"></div>`;
+ el.querySelector(".wb").appendChild(sec);sec.classList.add("on");desk.appendChild(el);
+ if(dr.width<700)el.classList.add("max");
+ const tb=document.createElement("button");tb.className="b";tb.dataset.id=id;tb.innerHTML=`${a[2]} ${a[1]}`;tasks.appendChild(tb);
+ tb.onclick=()=>{const w=W[id];if(w.el.classList.contains("focus")&&!w.min){w.el.style.display="none";w.min=true;w.el.classList.remove("focus");tb.classList.remove("on")}else focus(id)};
+ W[id]={el,tb,sec};
+ el.onpointerdown=()=>focus(id);
+ el.querySelector(".x").onclick=e=>{e.stopPropagation();sec.classList.remove("on");document.querySelector("#store").appendChild(sec);el.remove();tb.remove();delete W[id]};
+ el.querySelector(".mn").onclick=e=>{e.stopPropagation();el.style.display="none";W[id].min=true;el.classList.remove("focus");tb.classList.remove("on")};
+ const mx=()=>{el.classList.toggle("max");if(id==="m3d")setTimeout(()=>dispatchEvent(new Event("resize")),30)};
+ el.querySelector(".mx").onclick=e=>{e.stopPropagation();mx()};el.querySelector(".wt").ondblclick=mx;
+ drag(el.querySelector(".wt"),(dx,dy,o)=>{if(el.classList.contains("max"))return;el.style.left=o.l+dx+"px";el.style.top=Math.max(0,o.t+dy)+"px"},()=>({l:el.offsetLeft,t:el.offsetTop}));
+ drag(el.querySelector(".wr"),(dx,dy,o)=>{el.style.width=Math.max(320,o.w+dx)+"px";el.style.height=Math.max(220,o.h+dy)+"px";if(id==="m3d")dispatchEvent(new Event("resize"))},()=>({w:el.offsetWidth,h:el.offsetHeight}));
+ if(id==="data")setTimeout(()=>document.querySelectorAll(".f").forEach(f=>f.style.width=f.dataset.w+"%"),150);
+ focus(id)}
+function drag(h,mv,st){h.onpointerdown=e=>{if(e.target.tagName==="BUTTON")return;const sx=e.clientX,sy=e.clientY,o=st();h.setPointerCapture(e.pointerId);
+ h.onpointermove=ev=>mv(ev.clientX-sx,ev.clientY-sy,o);h.onpointerup=()=>{h.onpointermove=null}}}
+// stash closed sections
+const store=document.createElement("div");store.id="store";store.style.display="none";document.body.appendChild(store);
+document.querySelectorAll("body>section").forEach(s=>store.appendChild(s));
+window.go=open;
+setInterval(()=>{document.getElementById("osclk").textContent=new Date().toLocaleTimeString("kk-KZ",{hour:"2-digit",minute:"2-digit"})},1000);
+// boot
+const boot=os.querySelector(".os-boot"),bar=boot.querySelector(".os-load div"),log=boot.querySelector(".log");
+const L=["BIOS: Алаш рухы ... OK","Жүктелуде: Тіл.sys","Жүктелуде: Білім.dll","Жүктелуде: Бірлік.drv","3D қозғалтқыш ... OK","Alash GPT ... онлайн"];let k=0;
+const iv=setInterval(()=>{k++;bar.style.width=Math.min(100,k*9)+"%";log.textContent=L[Math.min(L.length-1,k/2|0)];if(k>=12){clearInterval(iv);boot.style.opacity=0;setTimeout(()=>boot.remove(),600);open("home")}},140);
+function shutdown(){const d=document.createElement("div");d.className="os-boot";d.innerHTML=`<h1>РАХМЕТ!</h1><p>ЕНДІ КОМПЬЮТЕРДІ ӨШІРУГЕ БОЛАДЫ</p><button class="big" style="margin-top:10px">⏻ Қайта қосу</button>`;os.querySelector(".lt-scr").appendChild(d);d.querySelector("button").onclick=()=>location.reload()}
+})();
+</script>
+<script type="importmap">{"imports":{"three":"https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js","three/addons/":"https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"}}</script>
+<script type="module">
+import * as THREE from "three";
+import {OrbitControls} from "three/addons/controls/OrbitControls.js";
+import {RoomEnvironment} from "three/addons/environments/RoomEnvironment.js";
+import {EffectComposer} from "three/addons/postprocessing/EffectComposer.js";
+import {RenderPass} from "three/addons/postprocessing/RenderPass.js";
+import {UnrealBloomPass} from "three/addons/postprocessing/UnrealBloomPass.js";
+import {OutputPass} from "three/addons/postprocessing/OutputPass.js";
+import {GTAOPass} from "three/addons/postprocessing/GTAOPass.js";
+import {RoundedBoxGeometry} from "three/addons/geometries/RoundedBoxGeometry.js";
+
+const cv=document.getElementById("c3"),box=cv.parentElement;
+const R=new THREE.WebGLRenderer({canvas:cv,antialias:true,alpha:true});
+R.setPixelRatio(Math.min(devicePixelRatio,2));R.shadowMap.enabled=true;R.shadowMap.type=THREE.PCFSoftShadowMap;
+R.toneMapping=THREE.ACESFilmicToneMapping;R.toneMappingExposure=1.1;
+const S=new THREE.Scene();S.fog=new THREE.Fog(0xf3d29a,16,40);
+S.environment=new THREE.PMREMGenerator(R).fromScene(new RoomEnvironment(),.04).texture;
+const C=new THREE.PerspectiveCamera(40,1,.1,100);C.position.set(8,5.5,9.5);
+const O=new OrbitControls(C,cv);O.enableDamping=true;O.autoRotate=true;O.autoRotateSpeed=1.2;O.target.set(0,1.2,0);O.minDistance=3.5;O.maxDistance=16;O.maxPolarAngle=Math.PI*.49;
+const comp=new EffectComposer(R);comp.addPass(new RenderPass(S,C));const ao=new GTAOPass(S,C,1,1);ao.updateGtaoMaterial({radius:.35,distanceFallOff:1,thickness:1});comp.addPass(ao);
+const bloom=new UnrealBloomPass(new THREE.Vector2(1,1),.3,.5,.95);comp.addPass(bloom);comp.addPass(new OutputPass());
+
+S.add(new THREE.HemisphereLight(0xffd9a0,0x8a5a30,1));
+const sun=new THREE.DirectionalLight(0xffc27a,2.4);sun.position.set(6,10,5);sun.castShadow=true;sun.shadow.mapSize.set(2048,2048);
+Object.assign(sun.shadow.camera,{left:-8,right:8,top:8,bottom:-8});sun.shadow.bias=-.0004;S.add(sun);
+const rim=new THREE.PointLight(0x3be0ff,30,20);rim.position.set(-6,4,-5);S.add(rim);
+
+const ped=new THREE.Mesh(new THREE.CylinderGeometry(4.6,4.9,.4,96),new THREE.MeshStandardMaterial({color:0x5a3e28,metalness:.2,roughness:.6}));
+ped.position.y=-.2;ped.receiveShadow=true;S.add(ped);
+const glow=new THREE.Mesh(new THREE.TorusGeometry(4.75,.03,8,200),new THREE.MeshBasicMaterial({color:0xf5c542}));glow.rotation.x=Math.PI/2;glow.position.y=.01;S.add(glow);
+const fl=new THREE.Mesh(new THREE.CircleGeometry(30,64),new THREE.MeshStandardMaterial({color:0xc9a46a,roughness:1}));fl.rotation.x=-Math.PI/2;fl.position.y=-.4;fl.receiveShadow=true;S.add(fl);
+const pg=new THREE.BufferGeometry(),pa=new Float32Array(900);for(let i=0;i<900;i++)pa[i]=i%3==1?Math.random()*8:(Math.random()-.5)*18;
+pg.setAttribute("position",new THREE.BufferAttribute(pa,3));const pts=new THREE.Points(pg,new THREE.PointsMaterial({color:0xf5c542,size:.04,transparent:true,opacity:.7}));S.add(pts);
+
+function ornCanvas(bg,fg,w=1024,h=256,band=true){const c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");x.fillStyle=bg;x.fillRect(0,0,w,h);
+ x.strokeStyle=fg;x.lineCap="round";const n=Math.max(1,Math.round(w/h*2)),u=w/n,r=Math.min(u,h)*.26;x.lineWidth=r*.2;
+ for(let i=0;i<n;i++){const cx=u*i+u/2,cy=h/2;x.beginPath();
+  x.moveTo(cx,cy+r*1.1);x.lineTo(cx,cy-r*.2);x.bezierCurveTo(cx,cy-r*1.3,cx-r*1.4,cy-r*1.2,cx-r*1.3,cy-r*.1);x.bezierCurveTo(cx-r*1.2,cy+r*.6,cx-r*.4,cy+r*.5,cx-r*.5,cy);
+  x.moveTo(cx,cy-r*.2);x.bezierCurveTo(cx,cy-r*1.3,cx+r*1.4,cy-r*1.2,cx+r*1.3,cy-r*.1);x.bezierCurveTo(cx+r*1.2,cy+r*.6,cx+r*.4,cy+r*.5,cx+r*.5,cy);x.stroke();}
+ if(band){x.fillStyle=fg;x.fillRect(0,0,w,h*.07);x.fillRect(0,h*.93,w,h*.07)}
+ const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;return t}
+function feltCanvas(){const c=document.createElement("canvas");c.width=c.height=512;const x=c.getContext("2d");x.fillStyle="#ece3d0";x.fillRect(0,0,512,512);
+ for(let i=0;i<14000;i++){const v=200+Math.random()*40|0;x.fillStyle=`rgba(${v},${v-12},${v-34},.35)`;x.fillRect(Math.random()*512,Math.random()*512,1+Math.random()*3,1)}
+ const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.colorSpace=THREE.SRGBColorSpace;return t}
+const felt=feltCanvas();
+function grain(base,dark){const c=document.createElement("canvas");c.width=256;c.height=1024;const x=c.getContext("2d");x.fillStyle=base;x.fillRect(0,0,256,1024);
+ for(let i=0;i<160;i++){x.strokeStyle=dark;x.globalAlpha=.08+Math.random()*.25;x.lineWidth=.5+Math.random()*2.5;x.beginPath();let xx=Math.random()*256;x.moveTo(xx,0);for(let y=0;y<=1024;y+=32){xx+=(Math.random()-.5)*6;x.lineTo(xx,y)}x.stroke()}
+ const t=new THREE.CanvasTexture(c);t.wrapS=t.wrapT=THREE.RepeatWrapping;t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;return t}
+const wg=grain("#b5532a","#4a1a08");
+const wood=new THREE.MeshStandardMaterial({map:wg,bumpMap:wg,bumpScale:1.5,roughness:.5,metalness:.05});
+const feltM=new THREE.MeshStandardMaterial({map:felt,bumpMap:felt,bumpScale:3,roughness:1,side:THREE.DoubleSide,color:0xf2ead8});
+const rope=new THREE.MeshStandardMaterial({color:0x8b1e1e,roughness:.85,bumpMap:wg,bumpScale:2});
+const gold=new THREE.MeshStandardMaterial({color:0xf5c542,metalness:1,roughness:.22});
+
+// ===== 1. КИІЗ ҮЙ =====
+function yurt(){const g=new THREE.Group(),Rr=2.6,H=1.7,top=3.3,shR=.55;
+ const sg=new THREE.CylinderGeometry(.018,.018,1,6),Y=new THREE.Vector3(0,1,0),N=64;
+ for(let i=0;i<N;i++)for(const d of[1,-1]){const a=i/N*Math.PI*2,a2=a+d*.42;const p1=new THREE.Vector3(Math.cos(a)*Rr,.05,Math.sin(a)*Rr),p2=new THREE.Vector3(Math.cos(a2)*Rr,H,Math.sin(a2)*Rr);
+  const m=new THREE.Mesh(sg,wood);m.position.copy(p1).add(p2).multiplyScalar(.5);m.scale.y=p1.distanceTo(p2);m.quaternion.setFromUnitVectors(Y,p2.clone().sub(p1).normalize());g.add(m)}
+ for(let i=0;i<48;i++){const a=i/48*Math.PI*2,p1=new THREE.Vector3(Math.cos(a)*Rr,H,Math.sin(a)*Rr),p2=new THREE.Vector3(Math.cos(a)*shR,top,Math.sin(a)*shR);
+  const c=new THREE.QuadraticBezierCurve3(p1,new THREE.Vector3(Math.cos(a)*Rr*.6,H+1.1,Math.sin(a)*Rr*.6),p2);g.add(new THREE.Mesh(new THREE.TubeGeometry(c,16,.025,6),wood))}
+ const wall=new THREE.Mesh(new THREE.CylinderGeometry(Rr+.04,Rr+.04,H*.62,96,1,true,.5,Math.PI*2-1.3),feltM);
+ wall.position.y=H*.31+.02;g.add(wall);
+ const bt=ornCanvas("#8b1e1e","#f5c542");bt.wrapS=THREE.RepeatWrapping;bt.repeat.x=3;
+ const band=new THREE.Mesh(new THREE.CylinderGeometry(Rr+.06,Rr+.06,.28,96,1,true),new THREE.MeshStandardMaterial({map:bt,roughness:.6,metalness:.2,side:THREE.DoubleSide}));band.position.y=H*.72;g.add(band);
+ const pr=[];for(let i=0;i<=24;i++){const t=i/24;pr.push(new THREE.Vector2(THREE.MathUtils.lerp(Rr+.08,shR+.05,t),H+.05+(top-H)*Math.sin(t*Math.PI/2)))}
+ const roof=new THREE.Mesh(new THREE.LatheGeometry(pr,96,0,Math.PI*1.72),feltM);roof.rotation.y=2.1;g.add(roof);
+ for(const t of[.3,.6]){const rr=THREE.MathUtils.lerp(Rr+.08,shR+.05,t)+.02,yy=H+.07+(top-H)*Math.sin(t*Math.PI/2);const tr=new THREE.Mesh(new THREE.TorusGeometry(rr,.035,8,120),new THREE.MeshStandardMaterial({color:0x8b1e1e,roughness:.7}));tr.rotation.x=Math.PI/2;tr.position.y=yy;g.add(tr)}
+ const sh=shanyrak(.6);sh.position.y=top+.02;g.add(sh);
+ const dt=ornCanvas("#b5532a","#f5c542",256,512,false);
+ const door=new THREE.Mesh(new THREE.BoxGeometry(.9,1.3,.08),[wood,wood,wood,wood,new THREE.MeshStandardMaterial({map:dt,roughness:.5}),wood]);
+ const da=-1.4;door.position.set(Math.cos(da)*(Rr+.02),.67,Math.sin(da)*(Rr+.02));door.lookAt(Math.cos(da)*9,.67,Math.sin(da)*9);g.add(door);
+ const rug=new THREE.Mesh(new THREE.CircleGeometry(Rr-.1,64),new THREE.MeshStandardMaterial({map:ornCanvas("#5a1414","#e8b23a",512,512),roughness:1}));rug.rotation.x=-Math.PI/2;rug.position.y=.02;g.add(rug);
+
+ // бау — diagonal ropes over walls
+ for(let i=0;i<24;i++){const a=.55+i/24*(Math.PI*2-1.4);if(a>Math.PI*2-.8)continue;const p=[];for(let k=0;k<=12;k++){const t=k/12,aa=a+t*.35;p.push(new THREE.Vector3(Math.cos(aa)*(Rr+.075),.1+t*(H*.6),Math.sin(aa)*(Rr+.075)))}
+  g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(p),24,.012,5),new THREE.MeshStandardMaterial({color:0xe9d9b0,roughness:.9})))}
+ // radial roof ropes
+ for(let i=0;i<16;i++){const a=2.1+.1+i/16*Math.PI*1.6,p=[];pr.forEach(v=>p.push(new THREE.Vector3(Math.cos(-a)*(v.x+.02),v.y+.02,Math.sin(-a)*(v.x+.02))));
+  g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(p),40,.016,6),rope))}
+ // door frame
+ const fr=new THREE.Group(),fm=wood;[[-.5,.7,.1,1.45],[.5,.7,.1,1.45],[0,1.42,1.1,.1],[0,.03,1.1,.06]].forEach(([x,y,w,h])=>{const b=new THREE.Mesh(new RoundedBoxGeometry(w,h,.14,3,.02),fm);b.position.set(x,y,0);fr.add(b)});
+ fr.position.copy(door.position);fr.quaternion.copy(door.quaternion);g.add(fr);
+ // түндік flap half-covering shanyrak
+ const tun=new THREE.Mesh(new THREE.SphereGeometry(.75,48,16,0,Math.PI,0,Math.PI/2.6),feltM);tun.position.y=top-.18;tun.scale.y=.45;tun.rotation.y=.4;g.add(tun);
+ // сандық chests + төсеніш inside
+ const chT=ornCanvas("#7a2a10","#f5c542",512,256,true);
+ for(const a of[2.6,3.2,3.8]){const ch=new THREE.Mesh(new RoundedBoxGeometry(.7,.42,.4,3,.04),[wood,wood,wood,wood,new THREE.MeshStandardMaterial({map:chT,roughness:.4,metalness:.3}),wood]);ch.position.set(Math.cos(a)*(Rr-.45),.23,Math.sin(a)*(Rr-.45));ch.lookAt(0,.23,0);g.add(ch);
+  for(let k=0;k<3;k++){const m=new THREE.Mesh(new RoundedBoxGeometry(.66,.07,.36,2,.03),new THREE.MeshStandardMaterial({color:[0xb52a2a,0x2a5ab5,0xe0b040][k],roughness:1}));m.position.copy(ch.position);m.position.y=.47+k*.07;m.quaternion.copy(ch.quaternion);g.add(m)}}
+ // тұс кілем hanging
+ const tk=new THREE.Mesh(new THREE.CylinderGeometry(Rr-.06,Rr-.06,1,48,1,true,4.4,1.2),new THREE.MeshStandardMaterial({map:ornCanvas("#1f3a7a","#f5c542",512,256,true),side:THREE.BackSide,roughness:.9}));tk.position.y=1.05;g.add(tk);
+ // steppe ground patch
+ return g}
+
+// ===== 2. ШАҢЫРАҚ =====
+function shanyrak(R0=1.6){const g=new THREE.Group(),tk=R0*.06;
+ const ring=new THREE.Mesh(new THREE.TorusGeometry(R0,tk*1.6,24,160),gold),ring2=new THREE.Mesh(new THREE.TorusGeometry(R0*1.08,tk*.5,12,160),gold);
+ ring.rotation.x=ring2.rotation.x=Math.PI/2;g.add(ring,ring2);
+ for(const ax of[0,1])for(const k of[-1,0,1]){const off=k*R0*.42,half=Math.sqrt(R0*R0-off*off),p=[];
+  for(let i=0;i<=40;i++){const t=i/40*2-1,y=R0*.55*(1-t*t);p.push(ax?new THREE.Vector3(off,y,t*half):new THREE.Vector3(t*half,y,off))}
+  g.add(new THREE.Mesh(new THREE.TubeGeometry(new THREE.CatmullRomCurve3(p),60,tk*.9,10),gold))}
+ const sp=new THREE.SphereGeometry(tk*.9,12,12);for(let i=0;i<32;i++){const a=i/32*Math.PI*2,s=new THREE.Mesh(sp,gold);s.position.set(Math.cos(a)*R0*1.08,0,Math.sin(a)*R0*1.08);g.add(s)}
+ return g}
+function shanyrakShow(){const g=new THREE.Group(),s=shanyrak(1.9);s.position.y=1.6;g.add(s);
+ const core=new THREE.Mesh(new THREE.SphereGeometry(.4,48,48),new THREE.MeshBasicMaterial({color:0xffd760}));core.position.y=1.9;g.add(core);
+ const rm=new THREE.MeshStandardMaterial({color:0xf5c542,emissive:0xf5a000,emissiveIntensity:.6});
+ for(let i=0;i<32;i++){const r=new THREE.Mesh(new THREE.ConeGeometry(.06,.8,8),rm),a=i/32*Math.PI*2;r.position.set(Math.cos(a)*3,1.6,Math.sin(a)*3);r.rotation.z=-Math.PI/2;r.rotation.y=-a;g.add(r)}
+
+ const orn=ornCanvas("#3a1a08","#f5c542",2048,128,true);orn.wrapS=THREE.RepeatWrapping;
+ const band=new THREE.Mesh(new THREE.CylinderGeometry(1.9*1.13,1.9*1.13,.22,160,1,true),new THREE.MeshStandardMaterial({map:orn,bumpMap:orn,bumpScale:4,roughness:.45,metalness:.4,side:THREE.DoubleSide}));band.position.y=0;s.add(band);
+ const tas=new THREE.MeshStandardMaterial({color:0xb01e2a,roughness:.8});
+ for(let i=0;i<12;i++){const a=i/12*Math.PI*2,h=new THREE.Group();const str=new THREE.Mesh(new THREE.CylinderGeometry(.01,.01,.5,6),gold);str.position.y=-.25;
+  const bead=new THREE.Mesh(new THREE.SphereGeometry(.06,16,16),gold);bead.position.y=-.52;const tl=new THREE.Mesh(new THREE.ConeGeometry(.07,.32,16,1,true),tas);tl.position.y=-.72;tl.rotation.x=Math.PI;
+  h.add(str,bead,tl);h.position.set(Math.cos(a)*2.08,-.1,Math.sin(a)*2.08);s.add(h)}
+ g.userData.spin=s;return g}
+
+// ===== 3. КІТАП =====
+function tex(c){const t=new THREE.CanvasTexture(c);t.colorSpace=THREE.SRGBColorSpace;t.anisotropy=8;return t}
+function coverCanvas(){const w=1024,h=1400,c=document.createElement("canvas");c.width=w;c.height=h;const x=c.getContext("2d");x.fillStyle="#5a1414";x.fillRect(0,0,w,h);
+ x.strokeStyle="#f5c542";x.lineWidth=14;x.strokeRect(50,50,w-100,h-100);x.lineWidth=4;x.strokeRect(80,80,w-160,h-160);
+ x.drawImage(ornCanvas("#5a1414","#f5c542",w-200,160,false).image,100,120);x.drawImage(ornCanvas("#5a1414","#f5c542",w-200,160,false).image,100,h-300);
+ x.fillStyle="#f5c542";x.textAlign="center";[["ТІЛ-ҚҰРАЛ",118,600,900],["қазақ тілінің сарфы",48,700,500],["АХМЕТ",62,960,800],["БАЙТҰРСЫНҰЛЫ",62,1040,800]].forEach(([t,sz,y,f])=>{x.font=`${f} ${sz}px Unbounded, Georgia`;x.fillText(t,w/2,y)});return tex(c)}
+function pageCanvas(left){const c=document.createElement("canvas");c.width=800;c.height=1100;const x=c.getContext("2d");x.fillStyle="#efe4c8";x.fillRect(0,0,800,1100);
+ const gr=x.createLinearGradient(left?800:0,0,left?600:200,0);gr.addColorStop(0,"rgba(90,60,20,.4)");gr.addColorStop(1,"rgba(0,0,0,0)");x.fillStyle=gr;x.fillRect(0,0,800,1100);
+ x.fillStyle="#2a1c10";x.textAlign="center";x.font="800 46px Georgia";x.fillText(left?"ТІЛ — ҚҰРАЛ":"ОЯН, ҚАЗАҚ!",400,140);
+ x.font="italic 32px Georgia";if(left){x.fillText("«Сөзі жоғалған жұрттың",400,215);x.fillText("өзі де жоғалады»",400,258)}else{x.fillText("«Көзіңді аш, оян, қазақ,",400,215);x.fillText("көтер басты»",400,258)}
+ x.fillStyle="rgba(42,28,16,.5)";for(let i=0;i<19;i++){const w=480+Math.random()*140;x.fillRect(400-w/2,330+i*36,w,6)}
+ x.fillStyle="#8b1e1e";x.font="800 28px Georgia";x.fillText(left?"— А. Байтұрсынұлы":"— М. Дулатұлы, 1909",400,1040);return tex(c)}
+function book(){const all=new THREE.Group(),g=new THREE.Group(),W=1.7,Hh=2.3,th=.05;
+ const leather=new THREE.MeshStandardMaterial({color:0x5a1414,roughness:.55,metalness:.1}),cov=new THREE.MeshStandardMaterial({map:coverCanvas(),roughness:.5,metalness:.15}),side=new THREE.MeshStandardMaterial({color:0xe9dcbc,roughness:.9});
+ for(const sd of[-1,1]){const half=new THREE.Group();
+  const cb=new THREE.Mesh(new THREE.BoxGeometry(W,th,Hh),[leather,leather,leather,sd>0?cov:leather,leather,leather]);cb.position.x=sd*W/2;half.add(cb);
+  const blk=new THREE.Mesh(new THREE.BoxGeometry(W-.1,.12,Hh-.12),side);blk.position.set(sd*W/2,.085,0);half.add(blk);
+  const pgm=new THREE.PlaneGeometry(W-.1,Hh-.12,48,1),pos=pgm.attributes.position;
+  for(let i=0;i<pos.count;i++){const px=pos.getX(i),u=(px+(W-.1)/2)/(W-.1),uu=Math.min(1,Math.max(0,sd>0?u:1-u));pos.setXYZ(i,px+sd*W/2,.15+.22*Math.sin(Math.PI*Math.pow(uu,.6))*(1-uu*.7),-pos.getY(i))}
+  pgm.computeVertexNormals();half.add(new THREE.Mesh(pgm,new THREE.MeshStandardMaterial({map:pageCanvas(sd<0),roughness:.85,side:THREE.DoubleSide})));
+  half.rotation.z=sd*.1;g.add(half)}
+ const bm=new THREE.Mesh(new THREE.BoxGeometry(.08,.005,1),gold);bm.position.set(.04,.1,Hh/2+.35);bm.rotation.x=.6;g.add(bm);
+ g.position.y=1.05;g.rotation.x=.4;
+ const stm=new THREE.MeshStandardMaterial({color:0x2a1608,roughness:.4,metalness:.2});
+ const base=new THREE.Mesh(new THREE.BoxGeometry(2.2,.15,1.6),stm);base.position.y=.08;
+ const neck=new THREE.Mesh(new THREE.CylinderGeometry(.12,.2,.85,24),stm);neck.position.y=.55;
+ const q=new THREE.Mesh(new THREE.ConeGeometry(.06,1.6,12),new THREE.MeshStandardMaterial({color:0xf4f1ea,roughness:.6}));q.position.set(1.5,.9,.4);q.rotation.z=-.9;
+
+ const cb2=new THREE.Group();const coverM=new THREE.MeshStandardMaterial({map:coverCanvas(),roughness:.45,metalness:.2,bumpMap:wg,bumpScale:.4});
+ const cvb=new THREE.Mesh(new RoundedBoxGeometry(1.25,.22,1.7,3,.03),[leather,leather,coverM,leather,side,side]);cb2.add(cvb);
+ const b3=new THREE.Mesh(new RoundedBoxGeometry(1.35,.2,1.8,3,.03),[new THREE.MeshStandardMaterial({color:0x1f3a5a,roughness:.5}),side,side,side,side,side]);b3.position.y=-.21;b3.material=new THREE.MeshStandardMaterial({color:0x1f3a5a,roughness:.5});cb2.add(b3);
+ cb2.position.set(-1.9,.32,.6);cb2.rotation.y=.5;
+ const ink=new THREE.Group();const glass=new THREE.Mesh(new THREE.CylinderGeometry(.16,.2,.28,32),new THREE.MeshPhysicalMaterial({color:0x111a33,roughness:.05,transmission:.6,thickness:.3}));glass.position.y=.14;
+ const lid=new THREE.Mesh(new THREE.CylinderGeometry(.09,.09,.06,24),gold);lid.position.y=.31;ink.add(glass,lid);ink.position.set(1.3,0,.75);
+ q.position.set(1.32,.75,.75);q.rotation.set(0,0,-.35);
+ all.add(base,neck,g,q,cb2,ink);all.scale.setScalar(1.3);return all}
+
+const INFO=[["Киіз үй","Көшпелі өркениеттің жүрегі. Кереге, уық, шаңырақ — бәрі бірлікте ғана тұрады. Алаштың «Бірлік» құндылығының символы."],
+["Шаңырақ","Ұрпақтан ұрпаққа берілетін қасиетті шеңбер, Елтаңбада да бар. Ел тұтастығы мен Дербестік идеясының бейнесі."],
+["«Тіл-құрал»","Ахмет Байтұрсынұлының қазақ тілі оқулығы. «Тіл» және «Білім» тіректері: ұлтты ағарту — ана тілінен басталады."]];
+const MODELS=[yurt(),shanyrakShow(),book()];
+MODELS.forEach(m=>m.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true}}));
+let cur=null;
+function show(i){if(cur)S.remove(cur);cur=MODELS[i];S.add(cur);cur.userData.t0=performance.now();
+ document.querySelectorAll(".v3ui button").forEach((b,k)=>b.classList.toggle("on",k==i));
+ document.getElementById("v3info").innerHTML=`<h3>${INFO[i][0]}</h3><p>${INFO[i][1]}</p>`;bloom.strength=i==1?.3:0}
+document.querySelectorAll(".v3ui button").forEach(b=>b.onclick=()=>show(+b.dataset.m));
+show(0);document.getElementById("v3load").remove();
+function resize(){const w=box.clientWidth,h=box.clientHeight;if(!w)return;R.setSize(w,h,false);comp.setSize(w,h);ao.setSize(w,h);C.aspect=w/h;C.updateProjectionMatrix()}
+addEventListener("resize",resize);resize();
+const clk=new THREE.Clock();
+R.setAnimationLoop(()=>{if(!box.offsetParent)return;const t=clk.getElapsedTime();O.update();pts.rotation.y=t*.03;
+ if(cur){const k=Math.min((performance.now()-cur.userData.t0)/700,1),e=1-Math.pow(1-k,3);cur.position.y=(e-1)*1.5;if(cur.userData.spin)cur.userData.spin.rotation.y=t*.4}
+ comp.render()});
+</script>
+
+</body>
+</html>
